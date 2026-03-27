@@ -1,0 +1,9 @@
+{
+  "name": "payground",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cypress": "^15.12.0"
+  }
+}
