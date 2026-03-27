@@ -5,7 +5,7 @@
 Para clonar este repositorio, ejecuta el siguiente comando:
 
 ```
-git clone https://github.com/danyelcid/payground.git
+git clone https://github.com/danyelcid/EPagosAutomation.git
 
 ```
 
@@ -72,7 +72,25 @@ Esto lanzará el Ejecutor de Pruebas de Cypress, donde puedes ejecutar tus prueb
 - Acceso a la URL/ambiente de EPagos donde se ejecutará la prueba (preprod en el script de login).
 - Cuenta y credenciales válidas para login 
 - Fixtures adecuados ubicados en `cypress/fixtures/tipoDNC.json` con campos utilizados:
-  - `comercio`, `convenio`, `nombre`, `idConvenioRc`, `marcaTalon`, `permiteAnulacion`, `procesarCodigoDeBarras`, `notificarTransaccionesConciliacion`, `tipoVolcado`, `codigoVolcado`, `comisionEPagos`, `monedas`, `habilitaciones`, `idOrganismo`, `numeroConvenio`, `comisionMP`, `comisionUrupago`, `desglose`, `tipoTimbreDigital`.
+  - `comercio`, tipo texto, sufijo del comercio,
+  - `convenio`,  tipo texto, sufijo del convenio,
+  - `nombre`,  tipo texto, Nombre del convenio,
+  - `tipoTimbreDigital`, tipo texto, Nombre del convenio,
+  - `idConvenioRc`, tipo entero, proporcionado por GW
+  - `marcaTalon`, tipo boolean,
+  - `permiteAnulacion`, tipo boolean,
+  - `procesarCodigoDeBarras`, tipo boolean,
+  - `notificarTransaccionesConciliacion`, tipo boolean,
+  - `tipoVolcado`, tipo texto, permite: 'NO_VOLCAR', 'VOLCAR_SIN:COMISIONES','VOLCAR_CON_COMISIONES',
+  - `codigoVolcado`, tipo entero, proporcionado por GW,
+  - `comisionEPagos`, tipo texto, comision de PEU a usar el el convenio,
+  - `comisionMP`, tipo texto, comision por uso de los medios de pago,
+  - `comisionUrupago`, tipo texto, comision por uso de Urupaga,
+  - `monedas`, tipo array, ['UYU','USD'],
+  - `idOrganismo`, tipo texto, atributo a configurar en bancos,
+  - `numeroConvenio`, tipo entero, atributo a configurar en bancos,
+  - `desglose`,  tipo texto, atributo del concepto,
+  - `habilitaciones`, tipo objeto, configuracion de la habilitaciones,
 
 ### Ejecutar la prueba específica
 
