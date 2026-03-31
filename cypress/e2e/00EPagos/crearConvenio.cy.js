@@ -8,7 +8,7 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
         })
     })
 
-    it.only('Crear nuevo convenio', () => {
+    it('Crear nuevo convenio', () => {
         cy.contains('Comercios').click()
 
         cy.fixture('tipoDNC').then((data) => {
@@ -353,7 +353,7 @@ it('Crear las properties del concepto y convenio las valida despues de creadas',
         //Si el convenio es de tipo Timbre Digital, no se debe crear properties del concepto 
         //porque se usa un concepto ya existente para todos los convenios de este tipo, 
         // por lo que solo se crean properties del convenio
-        
+
         if (!data.tipoTimbreDigital) {
             cy.get('a').contains('Nueva').click()
             cy.safeType('input[name="panelPrincipal:codigo"]', `epagos:concepto:${data.comercio}:${data.convenio}`)
