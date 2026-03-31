@@ -44,13 +44,22 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false
 })
 
-Cypress.Commands.add('safeType', (selector, value) => {
+Cypress.Commands.add('safeType', (selector, value, options) => {
+  const {
+    delay = 0,
+    force = false
+  } = options || {}
+
   cy.get(selector)
     .should('be.visible')
     .and('not.be.disabled')
-    .click()
-    .clear()
-    .type(value, {delay: 50})
+    .click({ force })
+    .then($el => {
+      if ($el.val() !== '') {
+        cy.wrap($el).clear({ force })
+      }
+    })
+    .type(value, { delay, force })
     .should('have.value', value)
 })
 

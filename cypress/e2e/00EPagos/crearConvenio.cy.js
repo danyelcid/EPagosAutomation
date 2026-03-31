@@ -8,20 +8,20 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
         })
     })
 
-    it('Crear nuevo convenio', () => {
+    it.only('Crear nuevo convenio', () => {
         cy.contains('Comercios').click()
 
         cy.fixture('tipoDNC').then((data) => {
 
             //filtar comercio y entrar al comercio
-            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
+            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio, { delay: 50 })
 
             cy.get('a').contains('epagos:comercio:' + data.comercio).click()
             cy.wait(1000)
             cy.get('a').contains('epagos:comercio:' + data.comercio).click()
 
             //buscar el convenio y se asegura que no exista antes de crearlo
-            cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio)
+            cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio, { delay: 50 })
             cy.contains('label', `epagos:convenio:${data.comercio}:${data.convenio}`).should('not.exist')
 
             cy.get('a').contains('Agregar Convenio').click()
@@ -76,7 +76,7 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
                 cy.wrap(element).click({ force: true })
             })
             //validar que el convenio se haya creado
-            cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', 'epagos:convenio:' + data.comercio + ':' + data.convenio)
+            cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', 'epagos:convenio:' + data.comercio + ':' + data.convenio, { delay: 50 })
             cy.get('tr').filter(':contains("Convenios")').should('contain', 'epagos:convenio:' + data.comercio + ':' + data.convenio)
 
         })
@@ -88,7 +88,7 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
 
         cy.fixture('tipoDNC').then((data) => {
             //buscar el comercio
-            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
+            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio, { delay: 50 })
 
             cy.get('a').contains('epagos:comercio:' + data.comercio).click()
             cy.wait(1000)
@@ -96,7 +96,7 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
 
             //buscar el convenio y lo selecciono para cargar las habilitaciones
 
-            cy.safeType('input[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio)
+            cy.safeType('input[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio, { delay: 50 })
 
             cy.contains('a', `epagos:convenio:${data.comercio}:${data.convenio}`).click()
             cy.wait(1000)
@@ -126,8 +126,8 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
 
             if (habilitacion.atributos) {
                 /**
-                 * si la habilitación no es de BANRED, se carga el atributo ID_BANCO con el valor del idBanco del JSON, 
-                 * porque este atributo solo aplica para los MP que no son BANRED, 
+                 * La habilitacion de BANRED, es la unica de bancos que no usa ID_BANCO como atributo,
+                 * por lo que no se carga el atributo ID_BANCO para esta habilitacion.
                  */
                 if (habilitacion.medioPago != 'BANRED') {
                     cy.get('[name="panelPrincipal:carrito:contenido:1:contenidoContainer:panelContenido:panelAtributos:atributosValor:elemento:select"] option').contains('ID_BANCO')
@@ -171,6 +171,11 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
             //pestaña Comision
             cy.contains('a', 'Comisión').click().wait(500);
 
+            /**
+             * URUPAGO es la unica habilitacion que tiene una comisión diferente a la comisión general de medio e pago, 
+             * por lo que se carga la comisión específica para esta habilitación en caso de que la habilitación sea URUPAGO, 
+             * caso contrario se carga la comisión general de medio e pago.
+             */
             if (habilitacion.medioPago != "URUPAGO") {
                 cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionMP)
 
@@ -213,15 +218,15 @@ describe('Crear Convenio - Concepto - habilitaciones y Properties', () => {
 it('Verificar convenio creado y sus habilitaciones', () => {
 
     cy.fixture('tipoDNC').then((data) => {
-        cy.safeType('[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
+        cy.safeType('[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio, { delay: 50 })
 
         cy.get('a').contains('epagos:comercio:' + data.comercio).click().wait(1000)
         cy.wait(1000)
         cy.get('a').contains(data.comercio).click()
 
-        cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio)
+        cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio, { delay: 50 })
 
-        cy.get('a').contains('epagos:convenio:' + data.comercio + ':' + data.convenio).click().wait(1000)
+        cy.get('a').contains('epagos:convenio:' + data.comercio + ':' + data.convenio).click()
         cy.wait(1000)
         cy.get('a').contains('epagos:convenio:' + data.comercio + ':' + data.convenio).click()
 
@@ -345,7 +350,10 @@ it('Crear las properties del concepto y convenio las valida despues de creadas',
             .should('be.visible')
             .click()
         //properties del concepto
-        //Si el convenio es de tipo Timbre Digital, no se debe crear properties del concepto porque se usa un concepto ya existente para todos los convenios de este tipo, por lo que solo se crean properties del convenio
+        //Si el convenio es de tipo Timbre Digital, no se debe crear properties del concepto 
+        //porque se usa un concepto ya existente para todos los convenios de este tipo, 
+        // por lo que solo se crean properties del convenio
+        
         if (!data.tipoTimbreDigital) {
             cy.get('a').contains('Nueva').click()
             cy.safeType('input[name="panelPrincipal:codigo"]', `epagos:concepto:${data.comercio}:${data.convenio}`)
