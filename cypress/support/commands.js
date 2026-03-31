@@ -47,7 +47,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 Cypress.Commands.add('safeType', (selector, value, options) => {
   const {
     delay = 0,
-    force = false
+    force = true
   } = options || {}
 
   cy.get(selector)

@@ -4,6 +4,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "cypress": "^15.12.0"
+    "cypress": "^15.12.0",
+    "cypress-slow-down": "^1.4.0"
   }
 }
