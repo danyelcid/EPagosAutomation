@@ -9,7 +9,7 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 
 it('Verificar convenio creado y sus habilitaciones', () => {
 
-    cy.fixture('tipoDNC').then((data) => {
+    cy.fixture('datosConvenio').then((data) => {
         cy.safeType('[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
 
         cy.get('a').contains('epagos:comercio:' + data.comercio).click().wait(1000)

@@ -7,7 +7,7 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 })
 
 it('Crear las properties del concepto y convenio las valida despues de creadas', () => {
-    cy.fixture('tipoDNC').then((data) => {
+    cy.fixture('datosConvenio').then((data) => {
         cy.contains('a', 'Properties')
             .should('be.visible')
             .click()

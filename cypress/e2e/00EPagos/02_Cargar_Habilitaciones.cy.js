@@ -7,9 +7,9 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 })
 
 it('Cargar las habilitaciones al convenio', () => {
-    cy.contains('Comercios').click()
+    cy.contains('datosConvenio').click()
 
-    cy.fixture('tipoDNC').then((data) => {
+    cy.fixture('convenioPrep').then((data) => {
         //buscar el comercio
         cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
 

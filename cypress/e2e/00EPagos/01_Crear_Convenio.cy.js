@@ -9,7 +9,7 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 it('Crear nuevo convenio', () => {
     cy.contains('Comercios').click()
 
-    cy.fixture('tipoDNC').then((data) => {
+    cy.fixture('datosConvenio').then((data) => {
 
         //filtar comercio y entrar al comercio
         cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)

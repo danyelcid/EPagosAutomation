@@ -7,7 +7,7 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 })
 
 it('Crear concepto asociado al convenio y valida despues de creado', () => {
-    cy.fixture('tipoDNC').then((data) => {
+    cy.fixture('datosConvenio').then((data) => {
         if (!data.tipoTimbreDigital) {
             cy.contains('a', 'Conceptos').click()
 
