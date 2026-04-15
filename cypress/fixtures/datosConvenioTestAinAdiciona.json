@@ -17,8 +17,8 @@
     "UYU"
   ],
   "comisionEPagos": "eepagos:comision:epagos_05porc_min_adiciona-Servicio de Solicitud - UI",
-  "comisionMP": "epagos:comision:085porc_min_max_adiciona",
-  "comisionUrupago": "epagos:comision:085porc_max_adiciona",
+  "comisionMP": "epagos:comision:085porc_min_max_noadiciona",
+  "comisionUrupago": "epagos:comision:estadoscontables:085porc_max_adiciona",
   "idOrganismo": "DGREC",
   "numeroConvenio": "00001",
   "habilitaciones": [
