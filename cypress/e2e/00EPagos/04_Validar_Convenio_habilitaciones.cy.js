@@ -8,15 +8,17 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 
 
 it('Verificar convenio creado y sus habilitaciones', () => {
+    cy.contains('Comercios').click()
+
 
     cy.fixture('datosConvenio').then((data) => {
-        cy.safeType('[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
+        cy.safeType('[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio, { delay: 15 })
 
         cy.get('a').contains('epagos:comercio:' + data.comercio).click().wait(1000)
         cy.wait(1000)
         cy.get('a').contains(data.comercio).click()
 
-        cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio)
+        cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio, { delay: 15 })
 
         cy.get('a').contains('epagos:convenio:' + data.comercio + ':' + data.convenio).click()
         cy.wait(1000)

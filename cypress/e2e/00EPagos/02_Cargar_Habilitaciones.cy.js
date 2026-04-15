@@ -7,9 +7,9 @@ beforeEach('Iniciar sesión en el ambiente', () => {
 })
 
 it('Cargar las habilitaciones al convenio', () => {
-    cy.contains('datosConvenio').click()
+    cy.contains('Comercios').click()
 
-    cy.fixture('convenioPrep').then((data) => {
+    cy.fixture('datosConvenio').then((data) => {
         //buscar el comercio
         cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
 
@@ -35,7 +35,7 @@ it('Cargar las habilitaciones al convenio', () => {
             //pestaña Interfaz MP
             cy.contains('a', 'Interfaz MP').click();
 
-            cy.safeType('#conectores', habilitacion.conector,{delay: 15})
+            cy.safeType('#conectores', habilitacion.conector, { delay: 15 })
             cy.get('#conectores-autocomplete').should('be.visible').contains(habilitacion.conector).click();
 
 
@@ -100,21 +100,21 @@ it('Cargar las habilitaciones al convenio', () => {
              * caso contrario se carga la comisión general de medio e pago.
              */
             if (habilitacion.medioPago != "URUPAGO") {
-                cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionMP,{delay: 25})
+                cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionMP, { delay: 25 })
 
                 cy.get('div.wicket-aa-container')
                     .should('be.visible')
                     .contains(new RegExp(`^${data.comisionMP}$`))
                     .click()
             } else {
-                cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionUrupago,{delay: 25})
+                cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionUrupago, { delay: 25 })
                 /*cy.get('div.wicket-aa-container')
                     .should('be.visible')
                     .contains(new RegExp(`^${data.comisionUrupago}$`))
                     .click()*/
             }
 
-            cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:conceptos"]', habilitacion.conceptoMP,{delay: 25})
+            cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:conceptos"]', habilitacion.conceptoMP, { delay: 25 })
 
             const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
@@ -125,14 +125,14 @@ it('Cargar las habilitaciones al convenio', () => {
             cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:ordinalComision"]', habilitacion.ordinal)
 
             //Comentarios y gardar
-            cy.safeType('textarea.ap_abmpage_comentarios', 'Se agrega la habilitación de MP ' + habilitacion.medioPago, {delay: 15})
+            cy.safeType('textarea.ap_abmpage_comentarios', 'Se agrega la habilitación de MP ' + habilitacion.medioPago, { delay: 15 })
             cy.wait(500);
 
             cy.contains('a', 'Guardar').click();
-           
+
             cy.get('.modal.fade.in').contains('a label', 'Si').then((element) => {
                 cy.wrap(element).click({ force: true });
-                
+
             })
         })
     })

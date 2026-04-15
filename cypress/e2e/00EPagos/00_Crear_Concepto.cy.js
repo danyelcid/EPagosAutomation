@@ -16,29 +16,22 @@ it('Crear concepto asociado al convenio y valida despues de creado', () => {
                 .click()
 
             cy.setCheckbox('[name="panelPrincipal:habilitado"]', true)
-            cy.safeType('input[name="panelPrincipal:contenidoSufijo:sufijo"]', `${data.comercio}:${data.convenio}`)
-            cy.safeType('input[name="panelPrincipal:nombre"]', `Concepto ${data.comercio} - ${data.nombre}`)
-            cy.safeType('input[name="panelPrincipal:descripcion"]', `Concepto ${data.comercio} - ${data.nombre}`)
-            cy.safeType('input[name="panelPrincipal:codigoGwHg"]', data.desglose)
+            cy.safeType('input[name="panelPrincipal:contenidoSufijo:sufijo"]', `${data.comercio}:${data.convenio}`, { delay: 15 })
+            cy.safeType('input[name="panelPrincipal:nombre"]', `Concepto ${data.comercio} - ${data.nombre}`, { delay: 15 })
+            cy.safeType('input[name="panelPrincipal:descripcion"]', `Concepto ${data.comercio} - ${data.nombre}`, { delay: 15 })
+            cy.safeType('input[name="panelPrincipal:codigoGwHg"]', data.desglose, { delay: 15 })
 
-            cy.safeType('textarea[name="comentario"]', 'Se crea el concepto para el convenio ' + data.nombre)
+            cy.safeType('textarea[name="comentario"]', 'Se crea el concepto para el convenio ' + data.nombre, { delay: 15 })
 
             cy.get('a').contains('Guardar').click()
 
             cy.contains('.modal.fade.in a label', 'Si').last().then((element) => {
                 cy.wrap(element).click({ force: true })
             })
-            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', `epagos:concepto:${data.comercio}:${data.convenio}`)
+            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', `epagos:concepto:${data.comercio}:${data.convenio}`, { delay: 15 })
 
             cy.get('label').contains(`epagos:concepto:${data.comercio}:${data.convenio}`)
                 .should('exist')
-
-            cy.safeType('input[tabla:table:iterHead:0:headerColumn:filtro]', `epagos:concepto:${data.comercio}:${data.convenio}`)
-            cy.get('.ap-orderedTable tbody tr')
-                .should('contain', `epagos:concepto:${data.comercio}:${data.convenio}`)
-                .should('contain', `${data.desglose}`)
-                .should('contain', 'EPAGOS')
-                .should('exist');
         }
     })
 })

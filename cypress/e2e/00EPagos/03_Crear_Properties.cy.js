@@ -18,7 +18,7 @@ it('Crear las properties del concepto y convenio las valida despues de creadas',
 
         if (!data.tipoTimbreDigital) {
             cy.get('a').contains('Nueva').click()
-            cy.safeType('input[name="panelPrincipal:codigo"]', `epagos:concepto:${data.comercio}:${data.convenio}`)
+            cy.safeType('input[name="panelPrincipal:codigo"]', `epagos:concepto:${data.comercio}:${data.convenio}`, { delay: 15 })
             cy.get('select[name="panelPrincipal:modulo:select"]').select('EPAGOS')
             cy.safeType('input[name="panelPrincipal:descripcion"]', 'Código de volcado')
             cy.safeType('input[name="panelPrincipal:valor"]', data.desglose)
@@ -33,7 +33,7 @@ it('Crear las properties del concepto y convenio las valida despues de creadas',
                 cy.wrap(element).click({ force: true })
             })
 
-            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', `epagos:concepto:${data.comercio}:${data.convenio}`)
+            cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', `epagos:concepto:${data.comercio}:${data.convenio}`, { delay: 15 })
             cy.get('.ap-orderedTable tbody tr')
                 .should('contain', `epagos:concepto:${data.comercio}:${data.convenio}`)
                 .should('contain', `${data.desglose}`)
@@ -43,7 +43,7 @@ it('Crear las properties del concepto y convenio las valida despues de creadas',
 
         //properties del convenio
         cy.get('a').contains('Nueva').click()
-        cy.safeType('input[name="panelPrincipal:codigo"]', `epagos:convenio:${data.comercio}:${data.convenio}`)
+        cy.safeType('input[name="panelPrincipal:codigo"]', `epagos:convenio:${data.comercio}:${data.convenio}`, { delay: 15 })
         cy.get('select[name="panelPrincipal:modulo:select"]').select('EPAGOS')
         cy.safeType('input[name="panelPrincipal:descripcion"]', 'Código de volcado')
         cy.safeType('input[name="panelPrincipal:valor"]', data.codigoVolcado)
@@ -56,7 +56,7 @@ it('Crear las properties del concepto y convenio las valida despues de creadas',
         cy.contains('.modal.fade.in a label', 'Si').last().then((element) => {
             cy.wrap(element).click({ force: true })
         })
-        cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', `epagos:convenio:${data.comercio}:${data.convenio}`)
+        cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', `epagos:convenio:${data.comercio}:${data.convenio}`, { delay: 15 })
         cy.get('.ap-orderedTable tbody tr')
             .should('contain', `epagos:convenio:${data.comercio}:${data.convenio}`)
             .should('contain', `${data.codigoVolcado}`)

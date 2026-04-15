@@ -1,9 +1,9 @@
 {
   "habilitado": true,
   "comercio": "comerciomock",
-  "convenio": "monto_gravado_ain_noadiciona",
+  "convenio": "monto_gravado_tipo_impo",
   "tipoTimbreDigital": false,
-  "nombre": "Convenio de pruebas monto grabado AIN no adiciona",
+  "nombre": "Convenio de pruebas tipo tipo",
   "idConvenioRc": 35,
   "marcaTalon": false,
   "permiteAnulacion": true,
