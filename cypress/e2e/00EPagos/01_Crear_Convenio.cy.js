@@ -28,9 +28,9 @@ it('Crear nuevo convenio', () => {
         cy.setCheckbox('[name="panelPrincipal:habilitado"]', data.habilitado)
         cy.get('[name="panelPrincipal:habilitado"]').should(data.habilitado ? 'be.checked' : 'not.be.checked');
 
-        cy.safeType('input#sufijoCodigo', data.convenio)
-        cy.safeType('input#nombre', data.nombre)
-        cy.safeType('input#descripcionConvenio', data.nombre)
+        cy.safeType('input#sufijoCodigo', data.convenio, { delay: 15 })
+        cy.safeType('input#nombre', data.nombre, { delay: 15 })
+        cy.safeType('input#descripcionConvenio', data.nombre, { delay: 15 })
 
         data.idConvenioRc ? cy.safeType('#idConvenioRc', data.idConvenioRc) : null
         cy.setCheckbox('#marcaTalonRC', data.marcaTalon)
@@ -53,7 +53,7 @@ it('Crear nuevo convenio', () => {
             cy.safeType('input#codigoGwHg', data.codigoVolcado)
         }
 
-        cy.safeType('input#comision', data.comisionEPagos)
+        cy.safeType('input#comision', data.comisionEPagos, { delay: 15 })
         cy.get('div#comision-autocomplete-container').should('be.visible').contains(data.comisionEPagos).click()
 
         data.monedas.forEach(moneda => {
