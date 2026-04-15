@@ -59,7 +59,7 @@ Cypress.Commands.add('safeType', (selector, value, options) => {
         cy.wrap($el).clear({ force })
       }
     })
-    .type(value, { delay, force })
+    .type(value, { delay })
     .should('have.value', value)
 })
 
