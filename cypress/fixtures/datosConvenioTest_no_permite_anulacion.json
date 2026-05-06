@@ -1,9 +1,9 @@
 {
   "habilitado": true,
   "comercio": "comerciomock",
-  "convenio": "no_permite_anulacion",
+  "convenio": "proxy_rc_deshabilitado",
   "tipoTimbreDigital": true,
-  "nombre": "Convenio que no permite anulacion por BO",
+  "nombre": "Convenio de pruebas proxy rc",
   "idConvenioRc": 151,
   "marcaTalon": false,
   "permiteAnulacion": false,
