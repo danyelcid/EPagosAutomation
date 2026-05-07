@@ -54,8 +54,10 @@ it('Crear nuevo convenio', () => {
             cy.safeType('input#codigoGwHg', data.codigoVolcado)
         }
 
-        cy.safeType('input#comision', data.comisionEPagos, { delay: 15 })
-        cy.get('div#comision-autocomplete-container').should('be.visible').contains(data.comisionEPagos).click()
+        if (data.comisionMP) {
+             cy.safeType('input#comisionMP', data.comisionMP, { delay: 15 })
+             cy.get('div#comisionMP-autocomplete-container').should('be.visible').contains(data.comisionMP).click()
+        }
 
         data.monedas.forEach(moneda => {
             cy.get('[name="panelPrincipal:monedas:elemento:select"] option').contains(moneda)
