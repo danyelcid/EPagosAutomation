@@ -1,16 +1,17 @@
 /// <reference types="cypress" />
 
-beforeEach('Iniciar sesión en el ambiente', () => {
-    cy.fixture('credenciales').then((credenciales) => {
-        cy.login(credenciales.usuario, credenciales.clave, credenciales.ambiente)
-    })
-})
 
 it('Crear nuevo convenio', () => {
-    cy.contains('Comercios').click()
+
 
     cy.fixture('datosConvenio').then((data) => {
+        let ambiente = data.ambiente
 
+        cy.fixture('credenciales').then((credenciales) => {
+            cy.login(credenciales.usuario, credenciales.clave, ambiente)
+        })
+
+        cy.contains('Comercios').click()
         //filtar comercio y entrar al comercio
         cy.safeType('input[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio)
 
@@ -19,7 +20,7 @@ it('Crear nuevo convenio', () => {
         cy.get('a').contains('epagos:comercio:' + data.comercio).click()
 
         //buscar el convenio y se asegura que no exista antes de crearlo
-        cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio)
+        cy.safeType('[name="panelPrincipal:convenios:table:iterHead:0:headerColumn:filtro"]', data.convenio, { delay: 15 })
         cy.contains('label', `epagos:convenio:${data.comercio}:${data.convenio}`).should('not.exist')
 
         cy.get('a').contains('Agregar Convenio').click()

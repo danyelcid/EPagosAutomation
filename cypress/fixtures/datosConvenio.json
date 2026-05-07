@@ -1,17 +1,13 @@
 {
-  "habilitado": true,
+  "datosPrimarios": "se actualizan en cada convenio",
+  "ambiente": "test",
   "comercio": "comerciomock",
   "convenio": "no_permite_anulacion",
-  "tipoTimbreDigital": true,
   "nombre": "Convenio que no permite anulacion por BO",
+  "descripcion": "Convenio que no permite anulacion por BO",
   "idConvenioRc": 151,
-  "marcaTalon": false,
-  "permiteAnulacion": false,
-  "procesarCodigoBarras": false,
-  "notificarTransaccionesConciliacion": false,
   "tipoVolcado": "NO_VOLCAR",
   "codigoVolcado": null,
-  "conceptoPrincipal": null,
   "desglose": "AINPAGTRAM",
   "monedas": [
     "UYU"
@@ -20,39 +16,14 @@
   "comisionMP": "epagos:comision:085porc_min_max_adiciona",
   "comisionUrupago": "epagos:comision:085porc_max_adiciona",
   "idOrganismo": "DGREC",
+  
+  
+  "datosSecundarios": "Casi no se actualizan",
   "numeroConvenio": "00001",
-  "habilitaciones": [
-    {
-      "medioPago": "ABITAB",
-      "conector": "Abitab - WEB - epagos:canalprocesador:abitab",
-      "mpConector": "epagos:mediodepagoprocesador:abitab",
-      "atributos": false,
-      "conceptoMP": "epagos:concepto:abitab:cobranza Comisión Abitab",
-      "ordinal": "2"
-    },
-    {
-      "medioPago": "REDPAGOS",
-      "conector": "RedPagos - WEB - epagos:canalprocesador:redpagos",
-      "mpConector": "epagos:mediodepagoprocesador:redpagos",
-      "atributos": false,
-      "conceptoMP": "epagos:concepto:redpagos:cobranza Comisión Redpagos",
-      "ordinal": "2"
-    },
-    {
-      "medioPago": "CORREOS",
-      "conector": "CORREO - WEB - epagos:canalprocesador:correo_web",
-      "mpConector": "epagos:mediodepagoprocesador:correo",
-      "atributos": false,
-      "conceptoMP": "epagos:concepto:correo:cobranza Comisión de Cobranza por Correo",
-      "ordinal": "2"
-    },
-    {
-      "medioPago": "URUPAGO",
-      "conector": "URUPAGO - WEB - epagos:canalprocesador:urupago_web",
-      "mpConector": "epagos:mediodepagoprocesador:urupago",
-      "atributos": false,
-      "conceptoMP": "epagos:concepto:urupago:cobranza Comisión de Cobranza por Urupago",
-      "ordinal": "2"
-    }
-  ]
+  "tipoTimbreDigital": true,
+  "marcaTalon": false,
+  "permiteAnulacion": false,
+  "procesarCodigoBarras": false,
+  "notificarTransaccionesConciliacion": false,
+  "conceptoPrincipal": null
 }
