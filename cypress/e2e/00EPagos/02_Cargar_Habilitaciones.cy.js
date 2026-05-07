@@ -96,38 +96,39 @@ it('Cargar las habilitaciones al convenio', () => {
 
                 }
                 //pestaña Comision
-                cy.contains('a', 'Comisión').click().wait(500);
+                if (data.comisionMP) {
+                    cy.contains('a', 'Comisión').click().wait(500);
 
-                /**
-                 * URUPAGO es la unica habilitacion que tiene una comisión diferente a la comisión general de medio e pago, 
-                 * por lo que se carga la comisión específica para esta habilitación en caso de que la habilitación sea URUPAGO, 
-                 * caso contrario se carga la comisión general de medio e pago.
-                 */
-                if (habilitacion.medioPago != "URUPAGO") {
-                    cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionMP, { delay: 25 })
+                    /**
+                     * URUPAGO es la unica habilitacion que tiene una comisión diferente a la comisión general de medio e pago, 
+                     * por lo que se carga la comisión específica para esta habilitación en caso de que la habilitación sea URUPAGO, 
+                     * caso contrario se carga la comisión general de medio e pago.
+                     */
+                    if (habilitacion.medioPago != "URUPAGO") {
+                        cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionMP, { delay: 25 })
 
-                    cy.get('div.wicket-aa-container')
-                        .should('be.visible')
-                        .contains(new RegExp(`^${data.comisionMP}$`))
-                        .click()
-                } else {
-                    cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionUrupago, { delay: 25 })
+                        cy.get('div.wicket-aa-container')
+                            .should('be.visible')
+                            .contains(new RegExp(`^${data.comisionMP}$`))
+                            .click()
+                    } else {
+                        cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]', data.comisionUrupago, { delay: 25 })
+                        /*cy.get('div.wicket-aa-container')
+                            .should('be.visible')
+                            .contains(new RegExp(`^${data.comisionUrupago}$`))
+                            .click()*/
+                    }
+
+                    cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:conceptos"]', habilitacion.conceptoMP, { delay: 25 })
+
+                    const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
                     /*cy.get('div.wicket-aa-container')
-                        .should('be.visible')
-                        .contains(new RegExp(`^${data.comisionUrupago}$`))
+                        .contains(new RegExp(`^${escapeRegex(habilitacion.conceptoMP)}$`))
                         .click()*/
+
+                    cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:ordinalComision"]', habilitacion.ordinal)
                 }
-
-                cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:conceptos"]', habilitacion.conceptoMP, { delay: 25 })
-
-                const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-                /*cy.get('div.wicket-aa-container')
-                    .contains(new RegExp(`^${escapeRegex(habilitacion.conceptoMP)}$`))
-                    .click()*/
-
-                cy.safeType('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:ordinalComision"]', habilitacion.ordinal)
-
                 //Comentarios y gardar
                 cy.safeType('textarea.ap_abmpage_comentarios', 'Se agrega la habilitación de MP ' + habilitacion.medioPago, { delay: 15 })
                 cy.wait(500);

@@ -26,12 +26,12 @@ it('Crear nuevo convenio', () => {
         cy.get('a').contains('Agregar Convenio').click()
 
         //Configurar datos cargados desde el JSON
-        cy.setCheckbox('[name="panelPrincipal:habilitado"]', data.habilitado)
-        cy.get('[name="panelPrincipal:habilitado"]').should(data.habilitado ? 'be.checked' : 'not.be.checked');
+        cy.setCheckbox('[name="panelPrincipal:habilitado"]', true)
+        cy.get('[name="panelPrincipal:habilitado"]').should('be.checked');
 
         cy.safeType('input#sufijoCodigo', data.convenio, { delay: 15 })
         cy.safeType('input#nombre', data.nombre, { delay: 15 })
-        cy.safeType('input#descripcionConvenio', data.nombre, { delay: 15 })
+        cy.safeType('input#descripcionConvenio', data.descripcion, { delay: 15 })
 
         data.idConvenioRc ? cy.safeType('#idConvenioRc', data.idConvenioRc) : null
         cy.setCheckbox('#marcaTalonRC', data.marcaTalon)
