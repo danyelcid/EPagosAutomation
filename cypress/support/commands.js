@@ -10,21 +10,21 @@
 //
 //
 // -- This is a parent command --
- Cypress.Commands.add('login', (email, password, ambiente) => { 
-    switch (ambiente) {
-        case 'test':
-            cy.visit('https://epagostest.sva.antel.com.uy/backoffice/config/login?0')
-            break;
-        case 'prep':
-            cy.visit('https://epagos-prep-rp03.sva.antel.com.uy/backoffice/config/login?0')
-            break;
-        default:
-            cy.visit('https://backoffice.pagos.antel.com.uy/backoffice/config/login?0')
-    }
-    cy.get('#login').type(email)
-    cy.get('#password').type(password)
-    cy.get('[type="submit"]').click()
-   })
+Cypress.Commands.add('login', (email, password, ambiente) => {
+  switch (ambiente) {
+    case 'prod':
+      cy.visit('https://backoffice.pagos.antel.com.uy/backoffice/config/login?0')
+      break;
+    case 'prep':
+      cy.visit('https://epagos-prep-rp03.sva.antel.com.uy/backoffice/config/login?0')
+      break;
+    default:
+      cy.visit('https://epagostest.sva.antel.com.uy/backoffice/config/login?0')
+  }
+  cy.get('#login').type(email)
+  cy.get('#password').type(password)
+  cy.get('[type="submit"]').click()
+})
 //
 //
 // -- This is a child command --

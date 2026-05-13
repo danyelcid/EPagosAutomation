@@ -1,6 +1,6 @@
 {
-  "datosPrimarios": "se actualizan en cada convenio",
-  "ambiente": "test",
+  "datosPrimarios": "se actualizan en cada convenio, ambiente acepta: test, prep, prod. los campos con valores se ponen a null para que no se actualicen",
+  "ambiente": "prep",
   "comercio": "comerciomock",
   "convenio": "no_permite_anulacion",
   "nombre": "Convenio que no permite anulacion por BO",
@@ -8,7 +8,7 @@
   "idConvenioRc": 151,
   "tipoVolcado": "NO_VOLCAR",
   "codigoVolcado": null,
-  "desglose": "AINPAGTRAM",
+  "desglose": null,
   "monedas": [
     "UYU"
   ],
