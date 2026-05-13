@@ -1,14 +1,15 @@
 /// <reference types="cypress" />
 
-beforeEach('Iniciar sesión en el ambiente', () => {
-    cy.fixture('credenciales').then((credenciales) => {
-        cy.login(credenciales.usuario, credenciales.clave, credenciales.ambiente)
-    })
-})
 
 it('Crear concepto asociado al convenio y valida despues de creado', () => {
     cy.fixture('datosConvenio').then((data) => {
         if (!data.tipoTimbreDigital) {
+            let ambiente = data.ambiente
+
+            cy.fixture('credenciales').then((credenciales) => {
+                cy.login(credenciales.usuario, credenciales.clave, ambiente)
+            })
+
             cy.contains('a', 'Conceptos').click()
 
             cy.contains('a', 'Nueva')

@@ -1,13 +1,14 @@
 /// <reference types="cypress" />
 
-beforeEach('Iniciar sesión en el ambiente', () => {
-    cy.fixture('credenciales').then((credenciales) => {
-        cy.login(credenciales.usuario, credenciales.clave, credenciales.ambiente)
-    })
-})
-
 it('Crear las properties del concepto y convenio las valida despues de creadas', () => {
     cy.fixture('datosConvenio').then((data) => {
+
+        let ambiente = data.ambiente
+
+        cy.fixture('credenciales').then((credenciales) => {
+            cy.login(credenciales.usuario, credenciales.clave, ambiente)
+        })
+
         cy.contains('a', 'Properties')
             .should('be.visible')
             .click()

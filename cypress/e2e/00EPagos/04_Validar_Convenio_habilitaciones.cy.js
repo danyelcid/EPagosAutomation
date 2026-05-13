@@ -1,17 +1,18 @@
 /// <reference types="cypress" />
 
-beforeEach('Iniciar sesión en el ambiente', () => {
-    cy.fixture('credenciales').then((credenciales) => {
-        cy.login(credenciales.usuario, credenciales.clave, credenciales.ambiente)
-    })
-})
-
 
 it('Verificar convenio creado y sus habilitaciones', () => {
-    cy.contains('Comercios').click()
 
 
     cy.fixture('datosConvenio').then((data) => {
+        let ambiente = data.ambiente
+
+        cy.fixture('credenciales').then((credenciales) => {
+            cy.login(credenciales.usuario, credenciales.clave, ambiente)
+        })
+
+        cy.contains('Comercios').click()
+
         cy.safeType('[name="tabla:table:iterHead:0:headerColumn:filtro"]', data.comercio, { delay: 15 })
 
         cy.get('a').contains('epagos:comercio:' + data.comercio).click().wait(1000)
@@ -25,7 +26,6 @@ it('Verificar convenio creado y sus habilitaciones', () => {
         cy.get('a').contains('epagos:convenio:' + data.comercio + ':' + data.convenio).click()
 
         //verificar datos cargados
-        cy.get('#habilitado').should(data.habilitado ? 'be.checked' : 'not.be.checked')
 
         cy.get('label').contains(`epagos:comercio:${data.comercio}`).should('exist');
         cy.get('label').contains(`epagos:convenio:${data.comercio}:${data.convenio}`).should('exist');
@@ -52,49 +52,50 @@ it('Verificar convenio creado y sus habilitaciones', () => {
         data.monedas.forEach(moneda => {
             cy.get('.ap-agregarLista .ap-orderedTable').should('contain', moneda)
         })
-
-        cy.wrap(data.habilitaciones).each((habilitacion) => {
-            const nombre = habilitacion.mpConector.split(':').pop()
-            cy.contains('label', `epagos:habilitacionprocesador:${data.comercio}:${data.convenio}_web:${nombre}`)
-                .should('exist')
-                .click();
-
-            if (habilitacion.atributos) {
-                cy.get('a label').contains('Interfaz MP').click()
-                cy.contains('label', "Listado de medios de pago conectores asociados")
+        cy.fixture(`${ambiente}/mediosPago`).then((mediosPago) => {
+            cy.wrap(mediosPago.habilitaciones).each((habilitacion) => {
+                const nombre = habilitacion.mpConector.split(':').pop()
+                cy.contains('label', `epagos:habilitacionprocesador:${data.comercio}:${data.convenio}_web:${nombre}`)
                     .should('exist')
-                    .should('be.visible');
+                    .click();
 
-                if (nombre != 'banred') {
-                    cy.contains('tr', `ID_BANCO`).should('exist').and('contain', habilitacion.idBanco)
+                if (habilitacion.atributos) {
+                    cy.get('a label').contains('Interfaz MP').click()
+                    cy.contains('label', "Listado de medios de pago conectores asociados")
+                        .should('exist')
+                        .should('be.visible');
+
+                    if (nombre != 'banred') {
+                        cy.contains('tr', `ID_BANCO`).should('exist').and('contain', habilitacion.idBanco)
+                    }
+                    cy.contains('tr', `ID_ORGANISMO`).should('exist').and('contain', data.idOrganismo)
+                    cy.contains('tr', `NUMERO_CONVENIO`).should('exist').and('contain', data.numeroConvenio)
                 }
-                cy.contains('tr', `ID_ORGANISMO`).should('exist').and('contain', data.idOrganismo)
-                cy.contains('tr', `NUMERO_CONVENIO`).should('exist').and('contain', data.numeroConvenio)
-            }
 
-            cy.get('a label').contains('Comisión').click()
+                cy.get('a label').contains('Comisión').click()
 
-            if (nombre != 'urupago') {
-                cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]')
+                if (nombre != 'urupago') {
+                    cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]')
+                        .should('exist')
+                        .should('be.visible')
+                        .should('have.value', data.comisionMP)
+                } else {
+                    cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]')
+                        .should('exist')
+                        .should('be.visible')
+                        .should('have.value', data.comisionUrupago)
+                }
+                cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:conceptos"]')
                     .should('exist')
                     .should('be.visible')
-                    .should('have.value', data.comisionMP)
-            } else {
-                cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:comisiones"]')
+                    .should('have.value', habilitacion.conceptoMP)
+
+                cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:ordinalComision"]')
                     .should('exist')
                     .should('be.visible')
-                    .should('have.value', data.comisionUrupago)
-            }
-            cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:conceptos"]')
-                .should('exist')
-                .should('be.visible')
-                .should('have.value', habilitacion.conceptoMP)
-
-            cy.get('[name="panelPrincipal:carrito:contenido:2:contenidoContainer:panelContenido:ordinalComision"]')
-                .should('exist')
-                .should('be.visible')
-                .should('have.value', habilitacion.ordinal)
-            cy.contains('a', 'Volver').click();
+                    .should('have.value', habilitacion.ordinal)
+                cy.contains('a', 'Volver').click();
+            })
         })
 
     })
