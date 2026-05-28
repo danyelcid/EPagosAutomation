@@ -31,7 +31,7 @@ it('Verificar convenio creado y sus habilitaciones', () => {
         cy.get('label').contains(`epagos:convenio:${data.comercio}:${data.convenio}`).should('exist');
 
         cy.get('input#nombre').should('have.value', data.nombre)
-        cy.get('input#descripcionConvenio').should('have.value', data.nombre)
+        cy.get('input#descripcionConvenio').should('have.value', data.descripcion)
 
         cy.get('#idConvenioRc').should('have.value', data.idConvenioRc ? data.idConvenioRc : '')
         cy.get('#marcaTalonRC').should(data.marcaTalon ? 'be.checked' : 'not.be.checked')

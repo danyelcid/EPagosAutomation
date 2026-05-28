@@ -3,7 +3,6 @@
 
 it('Crear nuevo convenio', () => {
 
-
     cy.fixture('datosConvenio').then((data) => {
         let ambiente = data.ambiente
 
@@ -41,22 +40,24 @@ it('Crear nuevo convenio', () => {
 
         //Concepto Principal para cuando este subida la funcionalidad en GUI con release correspondiente
         //data.conceptoPrincipal ? cy.safeType('#conceptoPrincipal', data.conceptoPrincipal) : null
+        if (data.tipoVolcado !== "NO_VOLCAR") {
+            cy.get('select[name="panelPrincipal:tipoDeVolcado:select"] option').contains(data.tipoVolcado)
+                .invoke('val')
+                .as('vtipoVolcado')
 
-        cy.get('select[name="panelPrincipal:tipoDeVolcado:select"] option').contains(data.tipoVolcado)
-            .invoke('val')
-            .as('vtipoVolcado')
+            cy.get('@vtipoVolcado').then((value) => {
+                cy.get('select[name="panelPrincipal:tipoDeVolcado:select"]').select(value)
+            })
 
-        cy.get('@vtipoVolcado').then((value) => {
-            cy.get('select[name="panelPrincipal:tipoDeVolcado:select"]').select(value)
-        })
-
-        if (data.tipoVolcado === 'VOLCAR_CON_COMISIONES') {
-            cy.safeType('input#codigoGwHg', data.codigoVolcado)
+            if (data.tipoVolcado === 'VOLCAR_CON_COMISIONES') {
+                cy.safeType('input#codigoGwHg', data.codigoVolcado)
+            }
         }
 
+
         if (data.comisionMP) {
-             cy.safeType('input#comisionMP', data.comisionMP, { delay: 15 })
-             cy.get('div#comisionMP-autocomplete-container').should('be.visible').contains(data.comisionMP).click()
+            cy.safeType('input#comision', data.comisionEPagos, { delay: 15 })
+            cy.get('div#comision-autocomplete-container').should('be.visible').contains(data.comisionEPagos).click()
         }
 
         data.monedas.forEach(moneda => {
