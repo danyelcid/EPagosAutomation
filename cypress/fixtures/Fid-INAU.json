@@ -1,14 +1,14 @@
 {
   "datosPrimarios": "se actualizan en cada convenio, ambiente acepta: test, prep, prod. los campos con valores se ponen a null para que no se actualicen",
-  "ambiente": "prod",
+  "ambiente": "prep",
   "comercio": "cnd",
-  "convenio": "convenios_cnd",
-  "nombre": "Compra Pliegos de Convenios-Llamados en Línea",
-  "descripcion": "Compra Pliegos de Convenios-Llamados en Línea",
-  "idConvenioRc": 968,
+  "convenio": "fideicomiso_inau",
+  "nombre": "Compra pliego fideicomiso INAU - Llamados en línea",
+  "descripcion": "Compra pliego fideicomiso INAU - Llamados en línea",
+  "idConvenioRc": 965,
   "tipoVolcado": "VOLCAR_CON_COMISIONES",
-  "codigoVolcado": 1050,
-  "desglose": "CNDCONV",
+  "codigoVolcado": 1047,
+  "desglose": "CNDINAUI",
   "monedas": [
     "UYU"
   ],
